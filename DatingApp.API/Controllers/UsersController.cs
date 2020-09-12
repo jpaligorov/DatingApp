@@ -47,11 +47,14 @@ namespace DatingApp.API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id, UserForUpdateDto userForUpdateDto)
         {
+            //Check if user is authorised
             if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
+            //Get User from DB based on ID
             var userFromRepo = await _repo.GetUser(id);
-
+            
+            //Map the fields from the user model to the fields from the DTO to update
             _mapper.Map(userForUpdateDto, userFromRepo);
 
             if (await _repo.SaveAll())
