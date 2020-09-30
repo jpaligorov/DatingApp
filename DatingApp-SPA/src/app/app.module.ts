@@ -13,6 +13,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { TimeagoModule } from 'ngx-timeago';
 import { FileUploadModule } from 'ng2-file-upload';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
@@ -40,13 +42,6 @@ import { MemberDetailResolver } from './_resolvers/member-detail.resolver';
 import { MemberListResolver } from './_resolvers/member-list.resolver';
 import { MemberEditResolver } from './_resolvers/member-edit.resolver';
 
-
-
-
-
-
-
-
 export function tokenGetter() {
   return localStorage.getItem('token');
 }
@@ -63,7 +58,7 @@ export function tokenGetter() {
     MemberCardComponent,
     MemberDetailComponent,
     MemberEditComponent,
-    PhotoEditorComponent
+    PhotoEditorComponent,
   ],
   imports: [
     BrowserModule,
@@ -73,21 +68,32 @@ export function tokenGetter() {
     BrowserAnimationsModule,
     BsDropdownModule.forRoot(),
     BsDatepickerModule.forRoot(),
+    PaginationModule.forRoot(),
     TabsModule.forRoot(),
     RouterModule.forRoot(appRoutes),
     TimeagoModule.forRoot(),
+    ButtonsModule.forRoot(),
     NgxGalleryModule,
     FileUploadModule,
     JwtModule.forRoot({
       config: {
         tokenGetter,
         allowedDomains: ['localhost:5000'],
-        disallowedRoutes: ['localhost:5000/api/auth']
-      }
-    })
+        disallowedRoutes: ['localhost:5000/api/auth'],
+      },
+    }),
   ],
-  providers: [AuthService, ErrorInterceptorProvider, AlertifyService, AuthGuard, UserService,
-    MemberDetailResolver, MemberListResolver, MemberEditResolver, PreventUnsavedChanges],
+  providers: [
+    AuthService,
+    ErrorInterceptorProvider,
+    AlertifyService,
+    AuthGuard,
+    UserService,
+    MemberDetailResolver,
+    MemberListResolver,
+    MemberEditResolver,
+    PreventUnsavedChanges,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
